@@ -223,8 +223,10 @@ def submit():  # submit a new entry
     city = str(cityEntry.get())
     county = str(countyEntry.get())
     num = str(numEntry.get())
-    if city == '' or county == '' or num == '':  # check if fields were all filled in
-        errorLabel.config(text='Please fill in all of the above fields.')
+    if city == '':  # ensure they have a value for city
+        errorLabel.config(text='Please fill in a value for city.')
+    elif county == '' and num == '':  # check if fields were all filled in
+        errorLabel.config(text='Please provide either a county or a prefix.')
     elif city in countyDict:  # check if city already exist in dict
         errorLabel.config(text='City already exists in our data!')
     elif num in prefixes:  # check if prefix is in use
@@ -249,7 +251,7 @@ def submit():  # submit a new entry
 
 # set up the rest of the gui
 
-myLabel = tk.Label(wn, text="Enter City Seat:")
+myLabel = tk.Label(wn, text="Enter City:")
 myLabel.place(x=winwidth / 2, y=15, anchor='center')
 
 txtEntry = tk.Entry(wn, textvariable=myValue)
@@ -263,7 +265,7 @@ radio2 = Radiobutton(wn, text="Both", variable=radioValue, value='2')
 radio2.place(x=winwidth * 0.75, y=70, anchor='center')
 
 btnMyButton = tk.Button(wn, text="Enter", command=returninfo)
-btnMyButton.place(x=winwidth / 3, y=40, anchor='center')
+btnMyButton.place(x=winwidth / 3 - 30, y=40, anchor='center')
 
 btnNewEntry = tk.Button(wn, text="New Entry", command=wn2entries)
 btnNewEntry.place(x=40, y=40, anchor='center')
