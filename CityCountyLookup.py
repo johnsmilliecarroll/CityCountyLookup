@@ -229,9 +229,7 @@ def submit():  # submit a new entry
         errorLabel.config(text='Please provide either a county or a prefix.')
     elif city in countyDict:  # check if city already exist in dict
         errorLabel.config(text='City already exists in our data!')
-    elif num in prefixes:  # check if prefix is in use
-        errorLabel.config(text='Prefix already being used')
-    elif not num.isnumeric():  # check that prefix is a number
+    elif not num.isnumeric() and num != '':  # check that prefix is a number
         errorLabel.config(text='Prefix is not a valid number')
     else:  # we're ok to submit the entry
         with open('data.txt', 'a') as txtf:  # open file for appending
@@ -242,10 +240,11 @@ def submit():  # submit a new entry
         countyDict[city.lower()] = {'County': county, 'Num': num}
         prefixes.append(num)  # add prefix to list
         print("inserted City:" + city + ", County:" + county + ", Prefix:" + num)
-        if entryfile1 != '':
-            Image.open(entryfile1).save("images/" + num + "-0.png")
-        if entryfile2 != '':
-            Image.open(entryfile2).save("images/" + num + "-1.png")
+        if num not in prefixes:  # check if prefix is in use
+            if entryfile1 != '':
+                Image.open(entryfile1).save("images/" + num + "-0.png")
+            if entryfile2 != '':
+                Image.open(entryfile2).save("images/" + num + "-1.png")
         wn2.destroy()  # close the window when done
 
 
